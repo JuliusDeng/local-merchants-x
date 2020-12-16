@@ -24,17 +24,6 @@
 		<!-- topradius -->
 		<view class="top-radius"></view>
 
-		<!-- banner -->
-		<!-- <view class="banner">
-      <u-swiper name="pic" :list="banner" border-radius="30" mode="none" 
-        @change="changeSwiper" @click="toSwiperPath"></u-swiper>
-      <view class="d-botbox">
-        <view v-for="(item, index) in banner" :key="index" class="b-dot" :class="[index == swiperCurrent ? 'active' : '']"></view>
-      </view>
-    </view> -->
-		
-		
-		
 		<template v-if="!tabsCurrent">
 			<!-- 八个分类 grid -->
 			<view class="grid-box">
@@ -50,7 +39,7 @@
 					</u-grid-item>
 				</u-grid>
 			</view>
-			<!-- 今日秒杀 -->
+			<!-- 今日商品秒杀 -->
 			<view class="new-goods" v-if="nowStep > -1 && footMoreList[0].length">
 				<view class="title-box">
 					<!-- <image src="/static/ico-star.png" mode="aspectFit" class="ico-star"></image> -->
@@ -86,7 +75,7 @@
 						</navigator>
 					</view>
 				</view>
-				<view class="mx-2 border">
+				<view class="mx-2 py-2 shadow-nom ">
 					<view class="position-relative ">
 						<image src="/static/topbg.jpg" style="height: 390rpx;width: 710rpx;" class="d-block"></image>
 						<view class="font-25 position-absolute right-0 bottom-0 d-flex a-center j-center rounded-top-left text-white" 
@@ -97,9 +86,7 @@
 					
 					<!-- 图下文字 -->
 					<view class="mx-1">
-						<view>
-							【好吃.小火锅】胜多负少的史蒂夫胜多负少的说的发送到史蒂夫第三方说的发送到防守打法史蒂夫史蒂夫说的发送到防守打法第三方
-						</view>
+						<view class="text-elli-two w-100">{{textElli}}</view>
 						<view class="mt-1">
 							<text class="text-red font-20">价值</text>
 							<text class="text-red font-30 ml-1">￥396.00</text>
@@ -119,6 +106,13 @@
 			</view>
 
 			<!-- 广告图 商圈查看 -->
+			<view class="mx-2 my-4 d-flex j-sb">
+				<image src="../../static/logo.png" style="width: 340rpx;height: 430rpx;"
+				class="rounded"></image>
+				<image src="../../static/logo.png" style="width: 340rpx;height: 430rpx;"
+				class="rounded"></image>
+			</view>
+			
 			
 			<!-- 吃喝玩乐推荐 card swiper -->
 			<view class="card-swiper">
@@ -130,83 +124,119 @@
 						<!-- <text class="label">更好的时代，值得遇见更好的你</text> -->
 					</view>
 					<view class="t-right">
-						<text class="bold">{{ cardSwiper+1 }}</text><text class="text">/{{ footMoreList[1].length }}</text>
+						<text class="bold">{{ cardSwiper+1 }}</text>
+						<text class="" style="padding-bottom: 6rpx;">/{{ footMoreList[1].length }}</text>
 					</view>
 				</view>
-				<view class="card-bot">
-					<swiper previous-margin="30rpx" next-margin="30rpx" style="height: 450rpx" :current="cardSwiper" @change="changeCardSwiper">
-						<swiper-item v-for="(item, index) in footMoreList[1]" :key="index" @click="toRoute({
-                url: 'pages/goods/details',
-                params: {
-                  id: item.product_id
-                }
-              })">
-							<view class="cardbox">
-								<u-image :src="item.image" width="100%" height="350rpx" border-radius="10" mode="scaleToFill"></u-image>
-								<view class="card-info">
-									<text class="text u-line-1">{{ item.store_name }}</text>
-									<text class="label u-line-1">{{ item.store_info }}</text>
+				<!-- 轮播图 -->
+				<swiper :indicator-dots="false" :autoplay="true" :interval="3000" :duration="1000" 
+				:circular="true" :current="cardSwiper" @change="changeCardSwiper"
+				style="height: 520rpx;">
+					<swiper-item v-for="(item, index) in footMoreList[1]" :key="index" 
+					 class="mx-2 rounded-8"  @click="toRoute({
+					url: 'pages/goods/details',
+					params: {
+					  id: item.product_id
+					}
+				  })">
+						<image :src="item.image"
+						class="rounded-8" style="width: 710rpx; height: 330rpx;"></image>
+						<!-- 图下文字 -->
+						<view class="" style="width: 710rpx;">
+							<text class="text-elli-two my-1">{{textElli}}</text>
+							<view class="d-flex j-sb a-center">
+								<!-- 左侧 -->
+								<view class="my-1">
+									<member>会员省2元</member>
+									<view class="d-flex font-20 mt-1">
+										<text class="text-red font-700 font-25 mx-1">￥68.80</text>
+										<!-- <text  class="text-red-light ">起</text> -->
+										<text class="text-through text-muted mr-1">￥100.80</text>
+										<!-- css写左箭头 -->
+										<arrow>4.8折</arrow>
+									</view>
 								</view>
+								<!-- 右侧 -->
+								<bottom-buy>立即购买</bottom-buy>
 							</view>
-						</swiper-item>
-					</swiper>
-				</view>
+						</view>
+						
+					</swiper-item>
+				</swiper>
+				
 			</view>
-			<!-- 玩乐特惠专区 精品推荐 -->
-			<view class="tabulation-box" v-if="nowStep > 1">
-				<view class="title-box">
-					<!-- <image src="/static/ico-star.png" mode="aspectFit" class="ico-star"></image> -->
-					<view class="line line-top" :style="{width: 56 * 5 + 'rpx'}"></view>
-					<text class="text">⭐️ 玩乐特惠专区</text>
-					<view class="secmore" @click="toRoute({
-             url: 'pages/goods/list', 
-             params: {
-               title: '⭐️ 玩乐特惠专区',
-               isvip: '1'
-             }
-           })">
-						<text>+更多推荐</text>
-					</view>
-				</view>
-				<!-- <view class="tabulation-image">
-         <u-image 
-           src="https://img.zcool.cn/community/01561e5f82aaf911013e458429655e.jpg@1280w_1l_2o_100sh.jpg" 
-           width="100%" height="300rpx" border-radius="10">
-         </u-image>
-       </view> -->
-				<!-- <view class="tabulation-more">
-         <u-section title="美食从来不说谎" sub-title="+更多推荐" :show-line="false" :bold="false" font-size="36"
-           @click="toRoute({
-             url: 'pages/goods/list',
-             params: {
-               type: 0,
-               title: '美食从来不说谎'
-             }
-           })">
-         </u-section>
-       </view> -->
-				<view class="goods-inbox">
-					<view class="goods-initem" v-for="(item, index) in footMoreList[2]" :key="index">
-						<goods-item :src="item.image" :title="item.store_name" :price="item.price" o-price=" " :show-btn="false"
-						 :right-text="`已售 ${item.sales}`" @click="toDetails(item)">
-						</goods-item>
-					</view>
-				</view>
-			</view>
-			<!-- 本周上新 -->
+			
+			<!-- 轮播广告图 -->
+			<swiper :indicator-dots="false" :autoplay="false" :interval="3000" :duration="1000" :circular="true">
+				<swiper-item style="height: 360rpx;">
+					<image src="/static/topbg.jpg" style="height: 360rpx;width: 710rpx;" 
+					class="d-block mx-2"></image>
+				</swiper-item>
+				<swiper-item class=" " style="height: 360rpx;">
+					<image src="/static/tran.png" style="height: 360rpx;width: 710rpx;" class="d-block mx-2 border"></image>
+				</swiper-item>
+			</swiper>
+			
+			<!-- 必吃美食|优选Top -->
 			<view class="goods-list" v-if="nowStep > 2">
 				<view class="title-box">
-					<!-- <image src="/static/ico-star.png" mode="aspectFit" class="ico-star"></image> -->
+					<view class="line line-top" style="width: 370rpx;"></view>
+					<text>⭐️ 必吃美食|优选Top</text>
+					<view class="secmore" @click="toRoute({
+					  url: 'pages/goods/list', 
+					  params: {
+						title: '➡️向右滑动查看',
+						isvip: '1'
+					  }
+					})">
+						<text>更多推荐</text><u-icon name="arrow-right" size="24"></u-icon>
+					</view>
+				</view>
+				
+				<!-- 内容 -->
+				<view class="mx-2 p-2  shadow rounded-8 " style="width: 710rpx;">
+					<view class="d-flex j-sb mb-2" v-for="i in 5" :key="i">
+						<!-- 左图 -->
+						<image src="../../static/logo.png" style="width: 220rpx;height: 220rpx;"></image>
+						<!-- 右侧 -->
+						<view class="d-flex flex-column j-sb" style="width: 420rpx;">
+							<view>
+								<view class="text-elli-two">{{textElli}}</view>
+								<arrow mtop="mt-1">6.8折</arrow>
+							</view>
+							
+							<view class="d-flex j-sb ">
+								<view class="">
+									<member>会员省2元</member>
+									<text class="text-red font-700 font-25 mx-1">￥159.00</text>
+								</view>
+								<bottom-buy>立即购买</bottom-buy>
+							</view>
+							
+							
+						</view>
+						
+					</view>
+					
+					
+					
+				</view>
+			</view>
+			
+			
+			<!-- 网红风味|吃货必备 本周上新 -->
+			<view class="goods-list" v-if="nowStep > 2">
+				<view class="title-box">
 					<view class="line line-top" style="width: 370rpx;"></view>
 					<text>⭐️ 网红风味|吃货必备</text>
 					<view class="secmore" @click="toRoute({
-              url: 'pages/goods/list', 
-              params: {
-                title: '➡️向右滑动查看',
-                isvip: '1'
-              }
-            })">
-						<text>+更多推荐</text>
+					  url: 'pages/goods/list', 
+					  params: {
+						title: '➡️向右滑动查看',
+						isvip: '1'
+					  }
+					})">
+						<text>向右滑动查看</text><u-icon name="arrow-right" size="24"></u-icon>
 					</view>
 				</view>
 				<scroll-view scroll-x="true">
@@ -218,12 +248,21 @@
 					</view>
 				</scroll-view>
 			</view>
-			<!-- 本周上新 -->
+			
+			<!-- 火锅|一起涮火锅 本周上新 -->
 			<view class="goods-list" v-if="nowStep > 3">
 				<view class="title-box">
-					<!-- <image src="/static/ico-star.png" mode="aspectFit" class="ico-star"></image> -->
 					<view class="line line-top" style="width: 330rpx;"></view>
 					<text>⭐️ 火锅|一起涮火锅</text>
+					<view class="secmore" @click="toRoute({
+					  url: '？？？', 
+					  params: {
+						title: '➡️向右滑动查看',
+						isvip: '1'
+					  }
+					})">
+						<text>向右滑动查看</text><u-icon name="arrow-right" size="24"></u-icon>
+					</view>
 				</view>
 				<scroll-view scroll-x="true">
 					<view class="goods-list-box">
@@ -234,12 +273,22 @@
 					</view>
 				</scroll-view>
 			</view>
-			<!-- 本周上新 -->
+			
+			<!-- 烤肉|烤鱼|烧烤吃不腻 本周上新 -->
 			<view class="goods-list" v-if="nowStep > 4">
 				<view class="title-box">
 					<!-- <image src="/static/ico-star.png" mode="aspectFit" class="ico-star"></image> -->
 					<view class="line line-top" style="width: 410rpx;"></view>
 					<text>⭐️ 烤肉|烤鱼|烧烤吃不腻</text>
+					<view class="secmore" @click="toRoute({
+					  url: '？？？', 
+					  params: {
+						title: '➡️向右滑动查看',
+						isvip: '1'
+					  }
+					})">
+						<text>向右滑动查看</text><u-icon name="arrow-right" size="24"></u-icon>
+					</view>
 				</view>
 				<scroll-view scroll-x="true">
 					<view class="goods-list-box">
@@ -250,56 +299,49 @@
 					</view>
 				</scroll-view>
 			</view>
+			
 			<!-- 广告 -->
 			<view class="advint" v-if="nowStep > 4 && ad.home_ad_pic" @click="toRoute({url: ad.home_ad_url})">
-				<u-image :src="ad.home_ad_pic" width="100%" height="200rpx"></u-image>
+				<u-image :src="ad.home_ad_pic" width="100%" height="400rpx"></u-image>
 			</view>
 
-			<!-- 吃喝玩乐 -->
-			<view class="tabulation-box" v-if="nowStep > 5">
+			<!-- 玩乐优惠专区 -->
+			<view class="goods-list" v-if="nowStep > 5">
 				<view class="title-box">
-					<!-- <image src="/static/ico-star.png" mode="aspectFit" class="ico-star"></image> -->
-					<view class="line line-top" :style="{width: 56 * 6.5 + 'rpx'}"></view>
-					<text class="text">⭐️ 必吃美食|优选Top</text>
+					<view class="line line-top" style="width: 410rpx;"></view>
+					<text>⭐️ 玩乐优惠专区</text>
 					<view class="secmore" @click="toRoute({
-              url: 'pages/goods/list', 
-              params: {
-                title: '⭐️ 必吃美食|优选Top',
-                hot_type: 'good'
-              }
-            })">
-						<text>+更多推荐</text>
+					  url: '？？？', 
+					  params: {
+						title: '➡️向右滑动查看',
+						isvip: '1'
+					  }
+					})">
+						<text>更多推荐</text><u-icon name="arrow-right" size="24"></u-icon>
 					</view>
 				</view>
-				<!-- <view class="tabulation-image">
-          <u-image 
-            src="https://img.zcool.cn/community/0137ec5c40168aa801203d2263e5f1.jpg@260w_195h_1c_1e_1o_100sh.jpg" 
-            width="100%" height="300rpx" border-radius="10"
-            >
-          </u-image>
-        </view> -->
-				<!-- <view class="tabulation-more">
-          <u-section title="解忧放松好去处" sub-title="+更多推荐" :show-line="false" :bold="false" font-size="36"
-            @click="toRoute({
-              url: 'pages/goods/list',
-              params: {
-                type: 1,
-                title: '解忧放松好去处'
-              }
-            })">
-          </u-section>
-        </view> -->
-				<view class="goods-inbox">
-					<view class="goods-initem" v-for="(item, index) in footMoreList[6]" :key="index">
-						<goods-item :src="item.image" :title="item.store_name" :price="item.price" o-price=" " :show-btn="false"
-						 :right-text="`已售 ${item.sales}`" @click="toDetails(item)">
-						</goods-item>
+				<!-- 玩乐优惠专区内容 -->
+				<view class="px-2 border-bottom d-flex j-sb flex-wrap">
+					<!-- 750-40=710-660=50 -->
+					<view class="border-bottom" style="width: 330rpx;height: 400rpx;"
+					v-for="i in 5" :key="i">
+						<image src="/static/logo.png" style="width: 220rpx;height: 220rpx;"></image>
+						<view class="text-elli-two">{{textElli}}</view>
+						
+						<view class="d-flex j-sb ">
+							<view>
+								<member mtop="mt-1">会员省2元</member>
+								<text class="text-red font-700 font-25 mx-1">￥159.00</text>
+							</view>
+							<bottom-buy>立即购买</bottom-buy>
+						</view>
 					</view>
 				</view>
 			</view>
-			<!-- foot logo -->
+			
+			
+			<!-- 底部技术支持栏 foot logo -->
 			<view class="logo-box" v-if="indexLoadStatus == 'nomore'">
-				<!-- <image src="/static/logo.png" mode="aspectFit" class="img-logo"></image> -->
 				<text class="text">{{ baseInfo.site_name }}技术支持</text>
 			</view>
 			<!-- loadmore -->
@@ -319,40 +361,25 @@
 				<u-loadmore :status="loadStatus"></u-loadmore>
 			</view>
 		</template>
-		<!-- mask -->
-		<!-- <u-mask :show="showReindex && footMoreList[1]">
-			<view class="re-index">
-				<image src="/static/fixbg.png" mode="aspectFit" class="re-bg"></image>
-				<view class="re-content">
-					<view class="re-item">
-						<view class="re-img">
-							<u-image :src="footMoreList[1][0].image" width="100%" height="100%" />
-						</view>
-						<view class="re-right">
-							<text class="re-title u-line-2">{{ footMoreList[1][0].store_name }}</text>
-							<view class="re-bot">
-								<text class="re-price">¥{{ footMoreList[1][0].price }}</text>
-								<text class="re-small">已有{{ footMoreList[1][0].sales }}人抢购</text>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="button-text" @click="toDetails(footMoreList[1][0])">
-					<text>立即抢购</text>
-				</view>
-				<view class="re-hide" @click="showReindex = false">
-					<u-icon name="close-circle" size="60" color="rgba(255, 255, 255, .8)"></u-icon>
-				</view>
-			</view>
-		</u-mask> -->
+		
 	</view>
 </template>
 
 <script>
+	import Arrow from '@/components/index/arrow.vue';
+	import Member from '@/components/index/member.vue';
+	import BottomBuy from '@/components/index/bottom-buy.vue';
+	
 	const appSystem = uni.getSystemInfoSync()
 	export default {
+		components: {
+			Arrow,
+			Member,
+			BottomBuy
+		},
 		data() {
 			return {
+				textElli: "【美颜美体.云景清吧】就是打开了司法鉴定所冷风机SDK就发对抗赛垃圾房东说开了房间的思考了第三方极乐迪斯科附近的抗衰老减肥的说的",
 				hotMoreGrid: [{
 					text: '爆品专区',
 					image: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1021385598,3332745907&fm=15&gp=0.jpg',
@@ -566,7 +593,14 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	
+	/*公共样式 */
+	// @import "/common/common.css";
+	/*自定义UI库 */
+	@import "/common/dev-yuchen.css";
+	
+	
 	.search {
 		padding-right: 50rpx;
 		display: flex;
@@ -826,22 +860,6 @@
 		}
 	}
 
-	.tabulation-box {
-		position: relative;
-
-		.tabulation-image {
-			padding: 0 $gutter;
-		}
-
-		.tabulation-more {
-			padding: $gutter;
-			background-color: rgba($color: #ffdd00, $alpha: 0.2);
-			margin: $gutter;
-			border-top-right-radius: $uni-border-radius-lg;
-			border-top-left-radius: $uni-border-radius-lg;
-			overflow: hidden;
-		}
-	}
 
 	.logo-box {
 		display: flex;

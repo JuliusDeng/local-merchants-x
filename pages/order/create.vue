@@ -216,7 +216,7 @@
       totalPrice () {
         let uPrice = (this.userInfo.group_id < 1 ? this.infoAttr.price : this.infoAttr.vip_price) || this.infoAttr.price
         let sPrice = Number(uPrice * this.nums - this.couponAmount)
-        return sPrice.toFixed(2)
+        return sPrice >0 ? sPrice.toFixed(2) : 0;
       },
       userInfo () {
         return this.$store.state.userInfo

@@ -28,19 +28,19 @@
 				    			<view class="left">
 				    				<u-icon name="home" :size="30" color="rgb(94,94,94)"></u-icon>
 				    				<view class="store">
-                      {{ index != 1 ? info.merchant.mer_name : info.group_order_sn }}
+                      {{ info.paid == 1 ? info.merchant.mer_name : info.group_order_sn }}
                     </view>
 				    				<u-icon name="arrow-right" color="rgb(203,203,203)" :size="26"></u-icon>
 				    			</view>
 				    			<view class="right">
-                    {{ index != 1 ? info.status == -1 ? '已退款' : payText[info.status] : '待付款' }}
+                    {{ info.paid ==1 ? info.status == -1 ? '已退款' : payText[info.status] : '待付款' }}
                   </view>
 				    		</view>
 				    		<view class="item" 
                   v-for="(ig, nx) in (info.orderProduct || info.orderList[0].orderProduct)" 
                   :key="index" 
                   @click="toRoute({
-                    url: index == 1 ? 'pages/order/payDetails' : 'pages/order/details',
+                    url: info.paid == 1 ? 'pages/order/payDetails' : 'pages/order/details',
                     params: {
                       id: info.order_id || info.group_order_id
                     }

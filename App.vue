@@ -49,10 +49,7 @@
 <style lang="scss">
   @import "uview-ui/index.scss";
   
-  /*公共样式 */
-  // @import "/common/common.css";
-  /*自定义UI库 */
-  @import "/common/dev-yuchen.css";
+  
   
   
 	/*每个页面公共css */

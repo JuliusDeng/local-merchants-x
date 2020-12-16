@@ -101,11 +101,11 @@ body{
 .h5{font-size:30rpx; line-height:1.8;}
 .h6{font-size:28rpx; line-height:1.8;}
 /* 文字粗细和斜体 */
-.font-weight-100 {font-weight: 100;}/*更细*/
-.font-weight-300 {font-weight: 300;}      /*细*/
-.font-weight-normal { font-weight: 400;}    /*正常*/
-.font-weight-700 { font-weight: 700;}      /*粗 700=bold*/
-.font-weight-900 { font-weight: 900;} /*更粗 font-weight范围：100-900*/
+.font-100 {font-weight: 100;}/*更细*/
+.font-300 {font-weight: 300;}      /*细*/
+.font-400 { font-weight: 400;}    /*正常*/
+.font-700 { font-weight: 700;}      /*粗 700=bold*/
+.font-900 { font-weight: 900;} /*更粗 font-weight范围：100-900*/
 .font-italic { font-style: italic;} /*斜体*/
 
 /* 文字缩进 */
@@ -138,7 +138,7 @@ body{
 
 
 
-.row { box-sizing: border-box!important; display: flex!important; flex-direction: row; flex-wrap: wrap;}
+.row { box-sizing: border- box!important; display: flex!important; flex-direction: row; flex-wrap: wrap;}
 [class*='col-'],[class*='span-'],[class*='span24-'] { min-height: 1px;box-sizing: border-box!important;}
 /* 栅栏一 */
 .col-1{ width: 62.5upx; } 
@@ -248,20 +248,21 @@ body{
 .border-left-0{ border-left-width: 0; }
 
 /* .border-primary{ border-color: var(--primary)!important } */
-.border-primary { border-color: #007bff;}
-.border-secondary {border-color: #6c757d;}
-.border-light-secondary {border-color: #E9E8E5;}
-.border-success {border-color: #28a745;}
-.border-info {border-color: #17a2b8;}
-.border-warning {border-color: #ffc107;}
-.border-danger {border-color: #dc3545;}
-.border-light {border-color: #f8f9fa;}
-.border-dark {border-color: #343a40;}
-.border-light-secondary{border-color: #F1F1F1!important;}
+.border-primary { border-width: 1upx; border-style: solid; border-color: #007bff;}
+.border-secondary { border-width: 1upx; border-style: solid;border-color: #6c757d;}
+.border-light-secondary { border-width: 1upx; border-style: solid;border-color: #E9E8E5;}
+.border-success { border-width: 1upx; border-style: solid;border-color: #28a745;}
+.border-info { border-width: 1upx; border-style: solid;border-color: #17a2b8;}
+.border-warning { border-width: 1upx; border-style: solid;border-color: #ffc107;}
+.border-danger { border-width: 1upx; border-style: solid;border-color: #dc3545;}
+.border-light { border-width: 1upx; border-style: solid;border-color: #f8f9fa;}
+.border-light2 { border-width: 1upx; border-style: solid;border-color: #ebebeb;}
+.border-dark { border-width: 1upx; border-style: solid;border-color: #231b18;}
+.border-light-secondary{ border-width: 1upx; border-style: solid;border-color: #F1F1F1!important;}
 
 /* 圆角 */
 .rounded-0 { border-radius: 0;}
-.rounded { border-radius: 8rpx;}
+.rounded-8 { border-radius: 8rpx;}
 .rounded-top {
   border-top-left-radius: 8rpx;
   border-top-right-radius: 8rpx;
@@ -449,7 +450,7 @@ body{
 .text-hover-danger { color: #a71d2a;}
 .text-light { color: #f8f9fa;}
 .text-hover-light { color: #cbd3da;}
-.text-dark { color: #343a40;}
+.text-dark { color: #231b18;}
 .text-hover-dark{ color: #121416;}
 .text-body { color: #212529;}
 .text-muted { color: #6c757d;}
@@ -553,7 +554,7 @@ body{
 
 /* 浅色文本 12种 */
 .text-red-light {
-	background-color: #e54d42;
+	color: #e95860;
 }
 
 .text-orange-light {
@@ -763,3 +764,14 @@ body{
 	color: #ffffff;
 }
 
+.text-elli-two {
+	/* overflow: hidden;text-overflow: ellipsis;white-space: nowrap;                                                                                                             */
+	/* width: 100px;  必须给宽度才行*/
+	display: inline-block;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	/* white-space:nowrap; */
+	display:-webkit-box;
+	-webkit-box-orient:vertical;
+	-webkit-line-clamp:2;
+}
